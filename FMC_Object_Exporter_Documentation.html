@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cisco FMC Object Exporter – Enhanced Script</title>
+</head>
+<body>
+    <h1>🔥 Cisco FMC Object Exporter – Enhanced Script</h1>
+    <h2>📋 Description</h2>
+    <p>
+        This Python script connects to Cisco Firepower Management Center (FMC) via the <code>fireREST</code> API,
+        exports <strong>host</strong>, <strong>network</strong>, and <strong>network group</strong> objects,
+        and compiles a clean Excel spreadsheet (<code>FMC_Object_Export.xlsx</code>) for easy analysis.
+    </p>
+    <ul>
+        <li>Processes <code>host</code> and <code>network</code> entries (value, name, type)</li>
+        <li>Processes <code>networkgroup</code> entries, excluding:
+            <ul>
+                <li>Groups containing only FQDN entries</li>
+                <li>Groups containing 0.0.0.0/0 or ::/0 literals</li>
+            </ul>
+        </li>
+        <li>Resolves object references in groups using <code>host.json</code></li>
+    </ul>
+
+    <h2>🧪 Example Output (Excel Columns)</h2>
+    <table border="1" cellpadding="5">
+        <tr><th>Value</th><th>Name</th><th>Type</th></tr>
+        <tr><td>192.168.1.100</td><td>CAMERAS</td><td>NetworkGroup</td></tr>
+        <tr><td>192.168.5.230</td><td>SERVER_WHITELIST</td><td>NetworkGroup</td></tr>
+        <tr><td>10.0.0.1</td><td>LABNET_VLAN100</td><td>Network</td></tr>
+    </table>
+
+    <h2>✅ Requirements</h2>
+    <pre><code>pip install fireREST pandas openpyxl ansicolors</code></pre>
+
+    <h2>🚀 How to Run</h2>
+    <ol>
+        <li>Enable REST API access in FMC: System > Configuration > REST API Preferences</li>
+        <li>Run the script: <code>python EXPORT.py</code></li>
+        <li>Enter FMC IP/hostname, username, and password when prompted</li>
+        <li>The script generates:
+            <ul>
+                <li>host.json, network.json, networkgroup.json</li>
+                <li>FMC_Object_Export.xlsx</li>
+            </ul>
+        </li>
+    </ol>
+
+    <h2>📁 Output Files</h2>
+    <ul>
+        <li><code>host.json</code>, <code>network.json</code>, <code>networkgroup.json</code>: Raw exports</li>
+        <li><code>FMC_Object_Export.xlsx</code>: Final Excel output</li>
+        <li><code>FMCObjectExport.log</code>: Log file</li>
+    </ul>
+
+    <h2>🛠️ Customization Ideas</h2>
+    <ul>
+        <li>Add range object support</li>
+        <li>Create Excel tabs per object type</li>
+        <li>Export to CSV or JSON instead</li>
+        <li>Include metadata like description, lastUser, or domain</li>
+    </ul>
+</body>
+</html>
